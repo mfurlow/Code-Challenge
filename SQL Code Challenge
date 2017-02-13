@@ -1,0 +1,42 @@
+CREATE DATABASE MikesCompany;
+USE MikesCompany;
+
+CREATE TABLE [Department]([DepartmentId] int IDENTITY(1,1) NOT NULL, [DepartmentName]varchar(20) NOT NULL
+CONSTRAINT Pk_Department_DepartmentId PRIMARY KEY (DepartmentId));
+INSERT INTO [Department](DepartmentName)VALUES('Public Relations');
+INSERT INTO [Department](DepartmentName)VALUES('Human Resources');
+INSERT INTO [Department](DepartmentName)VALUES('IT');
+INSERT INTO [Department](DepartmentName)VALUES('Public Works');
+Select * From Department;
+
+CREATE TABLE [StreetAddress]([StreetAddressId]int IDENTITY (1,1) NOT NULL,
+[City]varchar(20) NOT NULL, [State]varchar NOT NULL, [Zipcode] int NOT NULL, [EmployeeId]int NOT NULL
+CONSTRAINT PK_StreetAddress_StreetAddressId PRIMARY KEY (StreetAddressId)
+CONSTRAINT FK_StreetAddress_EmployeeId FOREIGN KEY (EmployeeId)
+REFERENCES [Employee] (EmployeeId));
+
+INSERT INTO [StreetAddress](City,[State],Zipcode,EmployeeId)VALUES('Detroit', 'M',48219,1);
+INSERT INTO [StreetAddress](City,[State],Zipcode,EmployeeId)VALUES('New York', 'N',48219,2);
+INSERT INTO [StreetAddress](City,[State],Zipcode,EmployeeId)VALUES('Charlotte', 'C',48219,3);
+
+CREATE TABLE[Employee]([EmployeeId]int IDENTITY(1,1) NOT NULL, [FirstName]varchar(20)NOT NULL,
+[LastName]varchar(20) NOT NULL, [Salary]int Not NULL,[StreetAddress] int NOT NULL, [DepartmentId] int NOT NULL
+CONSTRAINT PK_Employee_EmployeeId PRIMARY KEY (EmployeeId)
+CONSTRAINT FK_Employee_DepartmentId FOREIGN KEY (DepartmentId)
+REFERENCES [Department] (DepartmentId));
+INSERT INTO [Employee](FirstName,LastName, Salary,StreetAddress,DepartmentId)VALUES('Mike', 'Furlow',100000,1,1);
+INSERT INTO [Employee](FirstName,LastName, Salary,StreetAddress,DepartmentId)VALUES('Greg', 'Earl',150000,1,1);
+INSERT INTO [Employee](FirstName,LastName, Salary,StreetAddress,DepartmentId)VALUES('Nick', 'jPierre',230000,1,1);
+INSERT INTO [Employee](FirstName,LastName, Salary,StreetAddress,DepartmentId)VALUES('Paul', 'Jones',150000,1,2);
+INSERT INTO [Employee](FirstName,LastName, Salary,StreetAddress,DepartmentId)VALUES('Stephen', 'JOhnson',230000,1,4);
+
+--Select to return employees from one department
+SELECT * FROM Employee
+WHERE DepartmentId = 1;
+
+--Select to display the sum of the salaries in each department
+SELECT  SUM(Salary)
+FROM Employee.Employee
+WHERE
+-- SELECT to display alteration of employee table
+ALTER [Employee] ADD COLUMN [DateHired] DateTime NOT NULL;
